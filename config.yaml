@@ -1,0 +1,91 @@
+project:
+  name: "Система мониторинга отходов"
+  timezone: "Europe/Moscow"
+  random_seed: 42
+
+forecast:
+  target: "received_tons"
+  frequency: "D"
+  horizon_days: 7
+  warning_load_ratio: 0.85
+
+validation:
+  train_fraction: 0.70
+  validation_fraction: 0.15
+  test_fraction: 0.15
+  primary_metric: "mae"
+
+drift:
+  psi_warning_threshold: 0.20
+
+storage:
+  database_path: "data/database/waste_monitoring.sqlite"
+  raw_data_directory: "data/raw"
+  processed_data_directory: "data/processed"
+  incoming_data_directory: "data/incoming"
+
+artifacts:
+  models_directory: "artifacts/models"
+  reports_directory: "artifacts/reports"
+  figures_directory: "artifacts/figures"
+
+logging:
+  level: "INFO"
+  file_path: "logs/application.log"
+
+demo_data:
+  start_date: "2018-01-01"
+  end_date: "2025-12-31"
+  random_seed: 42
+
+  observations_filename: "mass_observations_clean_2018_2025.csv"
+  events_filename: "operational_events_2018_2025.jsonl"
+
+  facility_count: 16
+
+  districts:
+    - "Северный район"
+    - "Южный район"
+    - "Восточный район"
+    - "Западный район"
+
+  facility_types:
+    - "сортировочный комплекс"
+    - "перегрузочная станция"
+    - "комплекс переработки"
+    - "компостная площадка"
+
+  categories:
+    - id: "plastic"
+      name: "Пластик"
+      demand_factor: 0.85
+
+    - id: "paper"
+      name: "Бумага"
+      demand_factor: 1.00
+
+    - id: "cardboard"
+      name: "Картон"
+      demand_factor: 0.75
+
+    - id: "glass"
+      name: "Стекло"
+      demand_factor: 0.55
+
+    - id: "metal"
+      name: "Металл"
+      demand_factor: 0.35
+
+    - id: "organic"
+      name: "Органические отходы"
+      demand_factor: 1.35
+
+    - id: "textile"
+      name: "Текстиль"
+      demand_factor: 0.30
+
+    - id: "electronic"
+      name: "Электронные отходы"
+      demand_factor: 0.18
+
+  capacity_tons_per_day_per_category: 32.0
